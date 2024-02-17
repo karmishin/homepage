@@ -1,12 +1,21 @@
 package main
 
 import (
+	"embed"
 	"html/template"
 	"log"
 	"net/http"
 )
 
-var templates = template.Must(template.ParseFiles("templates/index.html"))
+var (
+	//go:embed static/*
+	staticFS embed.FS
+
+	//go:embed templates/*
+	templatesFS embed.FS
+)
+
+var templates = template.Must(template.ParseFS(templatesFS, "templates/index.html"))
 
 func handler(w http.ResponseWriter, r *http.Request) {
 	if r.URL.Path != "/" {
@@ -51,7 +60,7 @@ func searchHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	http.Handle("/static/", http.StripPrefix("/static", http.FileServer(http.Dir("./static"))))
+	http.Handle("/static/", http.StripPrefix("/static", http.FileServer(http.FS(staticFS))))
 	http.HandleFunc("/", handler)
 	http.HandleFunc("/search/", searchHandler)
 

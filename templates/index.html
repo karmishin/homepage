@@ -26,6 +26,8 @@
 
             .radio-buttons {
                 width: 100%;
+                display: flex;
+                justify-content: center;
             }
 
             form {
@@ -36,13 +38,8 @@
                 flex-direction: column;
             }
 
-            .radio-buttons {
-                display: flex;
-                justify-content: center;
-            }
-
-            input[type="radio"] {
-                margin-left: 1em;
+            label {
+                padding-right: 1em;
             }
 
             input[type="text"] {
@@ -71,7 +68,6 @@
     </head>
     <body>
         <div class="container">
-            <p>🌫️ -10 °C</p>
             <form method="post" action="/search/">
                 <input type="text" name="query" placeholder="search..." />
                 <div class="radio-buttons">
