@@ -6,7 +6,7 @@ import (
 	"net/http"
 )
 
-var templates = template.Must(template.ParseFiles("index.html"))
+var templates = template.Must(template.ParseFiles("templates/index.html"))
 
 func handler(w http.ResponseWriter, r *http.Request) {
 	if r.URL.Path != "/" {
