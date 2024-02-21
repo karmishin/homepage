@@ -2,6 +2,7 @@ package main
 
 import (
 	"embed"
+	"flag"
 	"html/template"
 	"log"
 	"net/http"
@@ -60,10 +61,13 @@ func searchHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
+	addr := flag.String("addr", ":8080", "Network address to listen on")
+	flag.Parse()
+
 	http.Handle("/static/", http.StripPrefix("/static", http.FileServer(http.FS(staticFS))))
 	http.HandleFunc("/", handler)
 	http.HandleFunc("/search/", searchHandler)
 
-	log.Println("Now serving.")
-	log.Fatal(http.ListenAndServe(":8080", nil))
+	log.Println("Now listening on " + *addr)
+	log.Fatal(http.ListenAndServe(*addr, nil))
 }
